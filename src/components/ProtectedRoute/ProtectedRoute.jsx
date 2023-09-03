@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const ProtectedRoute = ({ loggedIn, component: Component, ...props }) => {
   const navigate = useNavigate();
@@ -6,7 +6,7 @@ const ProtectedRoute = ({ loggedIn, component: Component, ...props }) => {
   return loggedIn ? (
     <Component {...props} />
   ) : (
-    navigate('/sign-in', { replace: true })
+    navigate("/sign-in", { replace: true })
   );
 };
 
