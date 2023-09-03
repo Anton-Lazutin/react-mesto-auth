@@ -1,3 +1,6 @@
+//здравствуйте, это промежуточная проверка, еще не все ошибки исправил, просто хочу убедиться что иду в правильном направлении =)
+
+
 import Header from "./Header/Header.jsx";
 import Main from "./Main/Main.jsx";
 import Footer from "./Footer/Footer.jsx";
