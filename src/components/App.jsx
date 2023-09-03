@@ -11,7 +11,7 @@ import EditProfilePopup from "./EditProfilePopup/EditProfilePopup.jsx";
 import EditAvatarPopup from "./EditAvatarPopup/EditAvatarPopup.jsx";
 import AddPlacePopup from "./AddPlacePopup/AddPlacePopup.jsx";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute.jsx";
-import { authorization, registration, checkToken } from "../utils/auth.js";
+import { authorize, register, checkToken } from "../utils/auth.js";
 
 import Register from "./Register/Register.jsx";
 import Login from  "./Login/Login.jsx";
@@ -161,7 +161,7 @@ function App() {
   }
 
   function handleLogin(data) {
-    authorization(data.email, data.password)
+    authorize(data.email, data.password)
         .then((res) => {
             setAnswer({
                 status: true,
@@ -183,7 +183,7 @@ function App() {
   }
 
   function handleRegister(data) {
-    registration(data.email, data.password)
+    register(data.email, data.password)
         .then(() => {
             setIsInfoTooltipOpen(true)
             setAnswer({
@@ -249,7 +249,7 @@ function handleTokenCheck() {
           isLoading = {isLoadingCards}
         />
       } />
-      <Route path="*" element={<Navigate to="/sigh-in" replace />} />
+      <Route path="*" element={<Navigate to="/sign-in" replace />} />
     </Routes>
 
     <Footer/>

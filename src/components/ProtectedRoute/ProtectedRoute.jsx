@@ -1,10 +1,13 @@
-import {  Navigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ loggedIn, element: Component, ...props}) => {
-  return(
-    loggedIn ?
-    <Component {...props}/> 
-    : < Navigate to="/sign-in" replace/>
-      )}
+const ProtectedRoute = ({ loggedIn, component: Component, ...props }) => {
+  const navigate = useNavigate();
 
-export default ProtectedRoute
+  return loggedIn ? (
+    <Component {...props} />
+  ) : (
+    navigate('/sign-in', { replace: true })
+  );
+};
+
+export default ProtectedRoute;

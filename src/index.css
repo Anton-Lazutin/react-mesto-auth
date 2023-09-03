@@ -57,3 +57,15 @@
 @import url(./blocks/page/__login/page__login.css);
 @import url(./blocks/login/__button/login__button.css);
 @import url(./blocks/header/__link/header__link.css);
+@import url(./blocks/auth/auth.css);
+@import url(./blocks/auth/__container/auth__container.css);
+@import url(./blocks/auth/__title/auth__title.css);
+@import url(./blocks/auth/__fieldset/auth__fieldset.css);
+@import url(./blocks/auth/__error-container/auth__error-container.css);
+@import url(./blocks/auth/__input/auth__input.css);
+@import url(./blocks/auth/__redirect/auth__redirect.css);
+@import url(./blocks/auth/__save-btn/auth__save-btn.css);
+@import url(./blocks/header/__info/header__info.css);
+@import url(./blocks/header/__email/header__email.css);
+@import url(./blocks/header/__logout/header__logout.css);
+

@@ -1,43 +1,37 @@
-const baseUrl = 'https://auth.nomoreparties.co'
+const baseUrl = "https://auth.nomoreparties.co";
 
 function getResponseData(res) {
-    return res.ok ? res.json() : Promise.reject(`${res.status} ${res.statusText}`)
+  return res.ok
+    ? res.json()
+    : Promise.reject(`${res.status} ${res.statusText}`);
 }
 
-export function registration(password, email) {
-    return fetch(`${baseUrl}/signup`, {
-    method: 'POST',
+export function register(email, password) {
+  return fetch(`${baseUrl}/signup`, {
+    method: "POST",
     headers: {
-        'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-        password: password,
-        email: email,
-    })
-    })
-    .then(res => getResponseData(res))
+    body: JSON.stringify({ email, password }),
+  }).then((res) => getResponseData(res));
 }
 
-export function authorization(password, email) {
-    return fetch(`${baseUrl}/signin`, {
-    method: 'POST',
+export function authorize(email, password) {
+  return fetch(`${baseUrl}/signin`, {
+    method: "POST",
     headers: {
-        'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-        password: password,
-        email: email,
-    })
-    })
-    .then(res => getResponseData(res))
+    body: JSON.stringify({ email, password }),
+  }).then((res) => getResponseData(res));
 }
 
 export function checkToken(token) {
-    return fetch(`${baseUrl}/users/me`, {
-    method: 'GET',
+  return fetch(`${baseUrl}/users/me`, {
+    method: "GET",
     headers: {
-        'Content-Type': 'application/json',
-        "Authorization" : `Bearer ${token}`
-    }})
-    .then(res => getResponseData(res))
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => getResponseData(res));
 }

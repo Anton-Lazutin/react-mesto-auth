@@ -1,11 +1,11 @@
 import { useContext, useEffect } from "react"
-import UseFormValidation from "../../utils/UseFormValidation"
+import useFormValidation from "../../utils/useFormValidation"
 import PopupWithForm from "../PopupWithForm/PopupWithForm"
 import CurrentUserContext from "../../contexts/CurrentUserContext"
 
 export default function EditProfilePopup({isOpen, onClose, onUpdateUser, isLoaderMessage}) {
     const currentUser = useContext(CurrentUserContext)
-    const { values, errors, isValid, handleChange, reset, setValue} = UseFormValidation()
+    const { values, errors, isValid, handleChange, reset, setValue} = useFormValidation()
 
     useEffect(() => {
         setValue("username", currentUser.name)
