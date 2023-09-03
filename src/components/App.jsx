@@ -70,6 +70,9 @@ function App() {
     document.removeEventListener("keydown", closePopupByEsc);
   }, [setAllStatesForClosePopups, closePopupByEsc]);
 
+
+  
+
   function setEventListenerForDocument() {
     document.addEventListener("keydown", closePopupByEsc);
   }

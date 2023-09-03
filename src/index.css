@@ -68,4 +68,6 @@
 @import url(./blocks/header/__info/header__info.css);
 @import url(./blocks/header/__email/header__email.css);
 @import url(./blocks/header/__logout/header__logout.css);
+@import url(./blocks/popup/__auth-image/popup__auth-image.css);
+@import url(./blocks/popup/__title/_auth/popup__title_auth.css);
 
