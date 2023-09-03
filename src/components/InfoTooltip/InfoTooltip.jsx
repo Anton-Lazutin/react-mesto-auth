@@ -3,12 +3,6 @@ import FailIcon from "../../images/error.svg";
 import React from "react";
 
 export default function InfoTooltip({isOpen, answer, onClose}) {
-  function handleClose(evt) {
-      if (evt.target.classList.contains('popup_opened')) {
-          onClose()
-          evt.target.classList.remove('popup_opened')
-      }
-  }
 
   return(
       <div className={`popup ${isOpen ? "popup_opened" : ""}`}>

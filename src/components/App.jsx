@@ -27,18 +27,15 @@ function App() {
   const [isImagePopup, setImagePopup] = useState(false)
   const [selectedCard, setSelectedCard] = useState({})
   const [isLoaderMessage, setIsLoaderMessage] = useState(false)
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false)
 
 // state context
   const [currentUser, setCurrentUser] = useState({})
-
 //state cards
   const [cards, setCards] = useState([])
   const [isLoadingCards, setIsLoadingCards] = useState(true)
   const [deleteCardId, setDeleteCardId] = useState('')
 // state login and registration
-
-  // const [isResultPopupOpen, setIsResultPopupOpen] = useState(false)
-  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false)
   const [loggedIn, setLoggedIn] = useState(false)
   const [userEmail, setUserEmail] =useState('')
   const [answer, setAnswer] = useState({
@@ -52,6 +49,7 @@ function App() {
     setIsAddPlacePopupOpen(false)
     setImagePopup(false)
     setIsDeletePopupOpen(false)
+    setIsInfoTooltipOpen(false)
   },[])
 
   const closePopupByEsc = useCallback ((evt) => { 
