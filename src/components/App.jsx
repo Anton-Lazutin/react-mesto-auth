@@ -218,9 +218,9 @@ function App() {
 
   function handleLogout() {
     localStorage.removeItem("jwt");
+    navigate("/sign-in");
     setLoggedIn(false);
     setUserEmail("");
-    navigate("/sign-in");
   }
 
   useEffect(() => {
