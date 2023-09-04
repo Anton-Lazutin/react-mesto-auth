@@ -32,7 +32,7 @@ export default function PopupWithForm({
               isValid ? "" : "popup__submit-btn_invalid"
             }`}
             type="submit"
-            disabled={isLoaderMessage}
+            disabled={isLoaderMessage || !isValid}
           >
             {isLoaderMessage ? loaderMessage : titleButton || "Сохранить"}
           </button>

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import useFormValidation from "../../hooks/useFormValidation";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
 
@@ -8,6 +9,12 @@ export default function AddPlacePopup({
   isLoaderMessage,
 }) {
   const { values, errors, isValid, handleChange, reset } = useFormValidation();
+
+  useEffect(() => {
+    if (isOpen) {
+      reset();
+    }
+  }, [isOpen]);
 
   function resetForClose() {
     onClose();

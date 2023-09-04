@@ -1,6 +1,3 @@
-//здравствуйте, это промежуточная проверка, еще не все ошибки исправил, просто хочу убедиться что иду в правильном направлении =)
-
-
 import Header from "./Header/Header.jsx";
 import Main from "./Main/Main.jsx";
 import Footer from "./Footer/Footer.jsx";
@@ -29,9 +26,12 @@ function App() {
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   const [isImagePopup, setImagePopup] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
-  const [isLoaderMessage, setIsLoaderMessage] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
-
+  //loaderMessage
+  const [isLoaderMessageForEditProfile, setIsLoaderMessageForEditProfile] = useState(false);
+  const [isLoaderMessageForAddPlace, setIsLoaderMessageForAddPlace] = useState(false); 
+  const [isLoaderMessageForAvatar, setIsLoaderMessageForAvatar] = useState(false);
+  const [isLoaderMessageForDelete, setIsLoaderMessageForDelete] = useState(false);
   // state context
   const [currentUser, setCurrentUser] = useState({});
   //state cards
@@ -41,7 +41,7 @@ function App() {
   // state login and registration
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState("");
-  const [answer, setAnswer] = useState({
+  const [infoTooletipState, setInfoTooletipState] = useState({
     status: false,
     text: "",
   });
@@ -69,9 +69,6 @@ function App() {
     setAllStatesForClosePopups();
     document.removeEventListener("keydown", closePopupByEsc);
   }, [setAllStatesForClosePopups, closePopupByEsc]);
-
-
-  
 
   function setEventListenerForDocument() {
     document.addEventListener("keydown", closePopupByEsc);
@@ -105,19 +102,22 @@ function App() {
   }
 
   useEffect(() => {
-    setIsLoadingCards(true);
-    Promise.all([api.getInfo(), api.getCards()])
-      .then(([dataUser, dataCard]) => {
-        setCurrentUser(dataUser);
-        setCards(dataCard);
-        setIsLoadingCards(false);
-      })
-      .catch((error) => console.error(`Ошибка: ${error}`));
-  }, []);
+    if (loggedIn) {
+      setIsLoadingCards(true);
+      Promise.all([api.getInfo(), api.getCards()])
+        .then(([dataUser, dataCard]) => {
+          setCurrentUser(dataUser);
+          setCards(dataCard);
+        })
+        .catch((error) => console.error(`Ошибка: ${error}`))
+        .finally(() => setIsLoadingCards(false));
+    }
+  }, [loggedIn]);
+  
 
   function handleDeleteSubmit(evt) {
     evt.preventDefault();
-    setIsLoaderMessage(true);
+    setIsLoaderMessageForDelete(true);
     api
       .deleteCard(deleteCardId)
       .then(() => {
@@ -127,58 +127,54 @@ function App() {
           })
         );
         closeAllPopups();
-        setIsLoaderMessage(false);
       })
       .catch((error) => console.error(`Ошибка: ${error}`))
-      .finally(() => setIsLoaderMessage(false));
+      .finally(() => setIsLoaderMessageForDelete(false));
   }
 
   function handleUpdateUser(dataUser, reset) {
-    setIsLoaderMessage(true);
+    setIsLoaderMessageForEditProfile(true);
     api
       .setUserInfo(dataUser)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
         reset();
-        setIsLoaderMessage(false);
       })
       .catch((error) => console.error(`Ошибка: ${error}`))
-      .finally(() => setIsLoaderMessage(false));
+      .finally(() => setIsLoaderMessageForEditProfile(false));
   }
 
   function handleUpdateAvatar(dataUser, reset) {
-    setIsLoaderMessage(true);
+    setIsLoaderMessageForAvatar(true);
     api
       .setUserAvatar(dataUser)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
         reset();
-        setIsLoaderMessage(false);
       })
       .catch((error) => console.error(`Ошибка: ${error}`))
-      .finally(() => setIsLoaderMessage(false));
+      .finally(() => setIsLoaderMessageForAvatar(false));
   }
 
   function handleAddPlaceSubmit(dataCard, reset) {
-    setIsLoaderMessage(true);
+    setIsLoaderMessageForAddPlace(true);
     api
       .addCard(dataCard)
       .then((res) => {
         setCards([res, ...cards]);
         closeAllPopups();
         reset();
-        setIsLoaderMessage(false);
       })
       .catch((error) => console.error(`Ошибка: ${error}`))
-      .finally(() => setIsLoaderMessage(false));
+      .finally(() => setIsLoaderMessageForAddPlace(false));
   }
 
   function handleLogin(data) {
     authorize(data.email, data.password)
       .then((res) => {
-        setAnswer({
+        setInfoTooletipState({
           status: true,
           text: "Вы успешно авторизовались!",
         });
@@ -189,7 +185,7 @@ function App() {
         setIsInfoTooltipOpen(true);
       })
       .catch(() => {
-        setAnswer({
+        setInfoTooletipState({
           status: false,
           text: "Что-то пошло не так! Попробуйте еще раз.",
         });
@@ -201,14 +197,14 @@ function App() {
     register(data.email, data.password)
       .then(() => {
         setIsInfoTooltipOpen(true);
-        setAnswer({
+        setInfoTooletipState({
           status: true,
           text: "Вы успешно зарегистрировались!",
         });
         navigate("/sign-in", { replace: true });
       })
       .catch(() => {
-        setAnswer({
+        setInfoTooletipState({
           status: false,
           text: "Что-то пошло не так! Попробуйте еще раз.",
         });
@@ -225,7 +221,7 @@ function App() {
 
   useEffect(() => {
     handleTokenCheck();
-  });
+  }, []);
 
   function handleTokenCheck() {
     const jwt = localStorage.getItem("jwt");
@@ -288,20 +284,20 @@ function App() {
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
-            isLoaderMessage={isLoaderMessage}
+            isLoaderMessage={isLoaderMessageForEditProfile}
           />
 
           <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
-            isLoaderMessage={isLoaderMessage}
+            isLoaderMessage={isLoaderMessageForAddPlace}
             onAddPlace={handleAddPlaceSubmit}
           />
 
           <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
-            isLoaderMessage={isLoaderMessage}
+            isLoaderMessage={isLoaderMessageForAvatar}
             onUpdateAvatar={handleUpdateAvatar}
           />
 
@@ -313,7 +309,7 @@ function App() {
             isOpen={isDeletePopupOpen}
             onClose={closeAllPopups}
             onSubmit={handleDeleteSubmit}
-            isLoaderMessage={isLoaderMessage}
+            isLoaderMessage={isLoaderMessageForDelete}
           />
 
           <ImagePopup
@@ -325,7 +321,7 @@ function App() {
           <InfoTooltip
             isOpen={isInfoTooltipOpen}
             onClose={closeAllPopups}
-            answer={answer}
+            answer={infoTooletipState}
           />
         </div>
       </div>
