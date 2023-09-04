@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 export default function PopupWithForm({
   name,
   title,
@@ -10,6 +12,24 @@ export default function PopupWithForm({
   loaderMessage,
   isValid = true,
 }) {
+  const handleEscClose = (evt) => {
+    if (evt.key === "Escape") {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener("keydown", handleEscClose);
+    } else {
+      document.removeEventListener("keydown", handleEscClose);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [isOpen]);
+
   return (
     <section
       className={`popup popup_${name} ${isOpen ? "popup_opened" : ""}`}
