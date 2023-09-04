@@ -121,16 +121,17 @@ function App() {
     api
       .deleteCard(deleteCardId)
       .then(() => {
-        setCards(
-          cards.filter((card) => {
+        setCards((prevCards) => {
+          return prevCards.filter((card) => {
             return card._id !== deleteCardId;
-          })
-        );
+          });
+        });
         closeAllPopups();
       })
       .catch((error) => console.error(`Ошибка: ${error}`))
       .finally(() => setIsLoaderMessageForDelete(false));
   }
+  
 
   function handleUpdateUser(dataUser, reset) {
     setIsLoaderMessageForEditProfile(true);
