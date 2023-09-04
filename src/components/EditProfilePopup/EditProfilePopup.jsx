@@ -10,18 +10,19 @@ export default function EditProfilePopup({
   isLoaderMessage,
 }) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, errors, isValid, handleChange, reset, setValue } =
+  const { values, errors, isValid, handleChange, reset } =
     useFormValidation();
 
-  useEffect(() => {
-    setValue("username", currentUser.name);
-    setValue("hobby", currentUser.about);
-  }, [currentUser, setValue]);
+    useEffect(() => {
+      if (isOpen) {
+        reset({ username: currentUser.name, hobby: currentUser.about });
+      }
+    }, [isOpen, currentUser]);
 
-  function resetForClose() {
-    onClose();
-    reset({ username: currentUser.name, hobby: currentUser.about });
-  }
+  // function resetForClose() {
+  //   onClose();
+  //   reset({ username: currentUser.name, hobby: currentUser.about });
+  // }
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -34,7 +35,7 @@ export default function EditProfilePopup({
       title="Редактировать профиль"
       loaderMessage="Сохранение..."
       isOpen={isOpen}
-      onClose={resetForClose}
+      onClose={onClose}
       isValid={isValid}
       isLoaderMessage={isLoaderMessage}
       onSubmit={handleSubmit}

@@ -41,7 +41,7 @@ function App() {
   // state login and registration
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState("");
-  const [infoTooletipState, setInfoTooletipState] = useState({
+  const [infoTooltipState, setInfoTooltipState] = useState({
     status: false,
     text: "",
   });
@@ -132,7 +132,6 @@ function App() {
       .finally(() => setIsLoaderMessageForDelete(false));
   }
   
-
   function handleUpdateUser(dataUser, reset) {
     setIsLoaderMessageForEditProfile(true);
     api
@@ -175,7 +174,7 @@ function App() {
   function handleLogin(data) {
     authorize(data.email, data.password)
       .then((res) => {
-        setInfoTooletipState({
+        setInfoTooltipState({
           status: true,
           text: "Вы успешно авторизовались!",
         });
@@ -186,7 +185,7 @@ function App() {
         setIsInfoTooltipOpen(true);
       })
       .catch(() => {
-        setInfoTooletipState({
+        setInfoTooltipState({
           status: false,
           text: "Что-то пошло не так! Попробуйте еще раз.",
         });
@@ -198,14 +197,14 @@ function App() {
     register(data.email, data.password)
       .then(() => {
         setIsInfoTooltipOpen(true);
-        setInfoTooletipState({
+        setInfoTooltipState({
           status: true,
           text: "Вы успешно зарегистрировались!",
         });
         navigate("/sign-in", { replace: true });
       })
       .catch(() => {
-        setInfoTooletipState({
+        setInfoTooltipState({
           status: false,
           text: "Что-то пошло не так! Попробуйте еще раз.",
         });
@@ -236,6 +235,26 @@ function App() {
         .catch((err) => console.log(err));
     }
   }
+
+  // function handleLike(card) {
+  //   const isLike = card.likes.some((like) => like._id === currentUser._id)
+
+  //   if (isLike) {
+  //     api
+  //       .deleteLike(card._id)
+  //       .then((newCard) => {
+  //         setCards((state) => state.map((item) => item._id === card._id ? newCard : item))
+  //       })
+  //       .catch((error) => console.error(`Ошибка: ${error}`))
+  //   } else {
+  //     api
+  //       .addLike(card._id)
+  //       .then((newCard) => {
+  //         setCards((state) => state.map((item) =>item._id === card._id ? newCard : item))
+  //       })
+  //       .catch((error) => console.error(`Ошибка: ${error}`))
+  //   }
+  // }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -273,6 +292,7 @@ function App() {
                   onCardClick={handleCardClick}
                   onDelete={handleDeleteCardClick}
                   isLoading={isLoadingCards}
+                  // onLike={handleLike}
                 />
               }
             />
@@ -322,7 +342,7 @@ function App() {
           <InfoTooltip
             isOpen={isInfoTooltipOpen}
             onClose={closeAllPopups}
-            answer={infoTooletipState}
+            answer={infoTooltipState}
           />
         </div>
       </div>

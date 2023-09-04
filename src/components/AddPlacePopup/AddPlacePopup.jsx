@@ -16,11 +16,6 @@ export default function AddPlacePopup({
     }
   }, [isOpen]);
 
-  function resetForClose() {
-    onClose();
-    reset();
-  }
-
   function handleSubmit(evt) {
     evt.preventDefault();
     onAddPlace({ place: values.place, link: values.link }, reset);
@@ -33,7 +28,7 @@ export default function AddPlacePopup({
       titleButton="Создать"
       loaderMessage="Создание..."
       isOpen={isOpen}
-      onClose={resetForClose}
+      onClose={onClose}
       isValid={isValid}
       isLoaderMessage={isLoaderMessage}
       onSubmit={handleSubmit}
