@@ -46,59 +46,35 @@ function App() {
     text: "",
   });
 
-  const setAllStatesForClosePopups = useCallback(() => {
+  function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setImagePopup(false);
     setIsDeletePopupOpen(false);
     setIsInfoTooltipOpen(false);
-  }, []);
-
-  const closePopupByEsc = useCallback(
-    (evt) => {
-      if (evt.key === "Escape") {
-        setAllStatesForClosePopups();
-        document.removeEventListener("keydown", closePopupByEsc);
-      }
-    },
-    [setAllStatesForClosePopups]
-  );
-
-  const closeAllPopups = useCallback(() => {
-    setAllStatesForClosePopups();
-    document.removeEventListener("keydown", closePopupByEsc);
-  }, [setAllStatesForClosePopups, closePopupByEsc]);
-
-  function setEventListenerForDocument() {
-    document.addEventListener("keydown", closePopupByEsc);
   }
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
-    setEventListenerForDocument();
   }
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
-    setEventListenerForDocument();
   }
 
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true);
-    setEventListenerForDocument();
   }
 
   function handleCardClick(card) {
     setSelectedCard(card);
     setImagePopup(true);
-    setEventListenerForDocument();
   }
 
   function handleDeleteCardClick(cardId) {
     setDeleteCardId(cardId);
     setIsDeletePopupOpen(true);
-    setEventListenerForDocument();
   }
 
   useEffect(() => {
