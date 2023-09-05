@@ -1,9 +1,15 @@
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
-import ButtonLike from "../ButtonLike/ButtonLike.jsx";
 
-export default function Card({ card, onCardClick, onDelete }) {
+export default function Card({ card, onCardClick, onDelete, onCardLike }) {
   const currentUser = useContext(CurrentUserContext);
+
+  const isOwn = card.owner._id === currentUser._id;
+  const isLiked = card.likes.some((like) => like._id === currentUser._id);
+  const cardLikeButtonClassName = `card__like-btn ${
+    isLiked ? "card__like-btn_active" : ""
+  }`;
+
   return (
     <article className="card">
       <img
@@ -12,7 +18,7 @@ export default function Card({ card, onCardClick, onDelete }) {
         className="card__pic"
         onClick={() => onCardClick({ link: card.link, name: card.name })}
       />
-      {currentUser._id === card.owner._id && (
+      {isOwn && (
         <button
           className="card__dlt-btn"
           type="button"
@@ -22,11 +28,12 @@ export default function Card({ card, onCardClick, onDelete }) {
       <div className="card__info">
         <h2 className="card__title">{card.name}</h2>
         <div className="card__likes">
-          <ButtonLike
-            likes={card.likes}
-            myId={currentUser._id}
-            cardId={card._id}
+          <button
+            className={cardLikeButtonClassName}
+            type="button"
+            onClick={() => onCardLike(card)}
           />
+          <span className="card__like-nmbr">{card.likes.length}</span>
         </div>
       </div>
     </article>

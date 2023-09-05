@@ -236,25 +236,25 @@ function App() {
     }
   }
 
-  // function handleLike(card) {
-  //   const isLike = card.likes.some((like) => like._id === currentUser._id)
+  function handleCardLike(card) {
+    const isLike = card.likes.some((like) => like._id === currentUser._id)
 
-  //   if (isLike) {
-  //     api
-  //       .deleteLike(card._id)
-  //       .then((newCard) => {
-  //         setCards((state) => state.map((item) => item._id === card._id ? newCard : item))
-  //       })
-  //       .catch((error) => console.error(`Ошибка: ${error}`))
-  //   } else {
-  //     api
-  //       .addLike(card._id)
-  //       .then((newCard) => {
-  //         setCards((state) => state.map((item) =>item._id === card._id ? newCard : item))
-  //       })
-  //       .catch((error) => console.error(`Ошибка: ${error}`))
-  //   }
-  // }
+    if (isLike) {
+      api
+        .deleteLike(card._id)
+        .then((newCard) => {
+          setCards((state) => state.map((item) => item._id === card._id ? newCard : item))
+        })
+        .catch((error) => console.error(`Ошибка: ${error}`))
+    } else {
+      api
+        .addLike(card._id)
+        .then((newCard) => {
+          setCards((state) => state.map((item) =>item._id === card._id ? newCard : item))
+        })
+        .catch((error) => console.error(`Ошибка: ${error}`))
+    }
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -292,7 +292,7 @@ function App() {
                   onCardClick={handleCardClick}
                   onDelete={handleDeleteCardClick}
                   isLoading={isLoadingCards}
-                  // onLike={handleLike}
+                  onCardLike={handleCardLike}
                 />
               }
             />

@@ -13,9 +13,7 @@ export default function Main({
   onDelete,
   cards,
   isLoading,
-  name,
-  handleRegister,
-  handleLogin,
+  onCardLike
 }) {
   const currentUser = useContext(CurrentUserContext);
 
@@ -75,6 +73,7 @@ export default function Main({
                   card={data}
                   onCardClick={onCardClick}
                   onDelete={onDelete}
+                  onCardLike = {onCardLike}
                 />
               </article>
             );
