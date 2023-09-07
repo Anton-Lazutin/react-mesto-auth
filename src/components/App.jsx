@@ -3,7 +3,7 @@ import Main from "./Main/Main.jsx";
 import Footer from "./Footer/Footer.jsx";
 import PopupWithForm from "./PopupWithForm/PopupWithForm.jsx";
 import ImagePopup from "./ImagePopup/ImagePopup.jsx";
-import { useCallback, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import CurrentUserContext from "../contexts/CurrentUserContext.js";
 import api from "../utils/api.js";
@@ -12,12 +12,11 @@ import EditAvatarPopup from "./EditAvatarPopup/EditAvatarPopup.jsx";
 import AddPlacePopup from "./AddPlacePopup/AddPlacePopup.jsx";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute.jsx";
 import { authorize, register, checkToken } from "../utils/auth.js";
-
 import Register from "./Register/Register.jsx";
 import Login from "./Login/Login.jsx";
 import InfoTooltip from "./InfoTooltip/InfoTooltip.jsx";
 
-function App() {
+export default function App() {
   const navigate = useNavigate();
   // state popups
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -325,5 +324,3 @@ function App() {
     </CurrentUserContext.Provider>
   );
 }
-
-export default App;
